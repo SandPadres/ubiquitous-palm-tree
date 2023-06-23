@@ -1,18 +1,23 @@
 import numpy as np
 import pandas as pd
-pengions = pd.read_csv("penguins.csv") #read in pengions
+from file_path import PERCEPTRON_FILE_PATH
+pengions = pd.read_csv(f"{PERCEPTRON_FILE_PATH}/penguins.csv") # read in penguins
 pengions = pengions.drop(["rowid","island","sex","year"], axis=1).dropna() #select data columns, and drop NAs
 pengions = pengions.loc[pengions["species"].isin(["Adelie","Gentoo"])] # Want 2 pengion species to binary classify
+pengions["bill_length_mm"] = (pengions["bill_length_mm"] - pengions["bill_length_mm"].mean() ) / pengions["bill_length_mm"].std() # standardize feature rows with mean 0 std 1 
+pengions["bill_depth_mm"] = (pengions["bill_depth_mm"] - pengions["bill_depth_mm"].mean() ) / pengions["bill_depth_mm"].std()
+pengions["flipper_length_mm"] = (pengions["flipper_length_mm"] - pengions["flipper_length_mm"].mean() ) / pengions["flipper_length_mm"].std()
+pengions["body_mass_g"] = (pengions["body_mass_g"] - pengions["body_mass_g"].mean() ) / pengions["body_mass_g"].std()
 pengions = pengions.sample(frac=1) # Mix up the datapoints so not all Adelie, then all Gentoo
 labels = pengions["species"].to_numpy().reshape((1,len(pengions))) #y
 labels = np.where(labels == "Adelie", -1, 1) # turn y values into 1, -1
 data = pengions.drop(["species"], axis=1).to_numpy().T #x
 # print(pengions.head())
-# print(labels)
+# print(labels.head)
 # print(data.head())
 # print(pengions["species"].values)
 # print(labels[:, 0])
-# print(type(data[:, 0][0]))
+# print(data[:, 0])
 
 # data = d x n
 # labels = 1 x n
