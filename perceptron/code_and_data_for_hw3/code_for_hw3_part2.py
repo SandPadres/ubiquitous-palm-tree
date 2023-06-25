@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 import csv
 from matplotlib.image import imread
+from file_path import DATASET_FILE_PATH, HW3_FILE_PATH
 
 
 print("Importing code_for_hw03 (part 2, imported as hw3)")
@@ -300,7 +301,7 @@ def auto_data_and_labels(auto_data, features):
     data_labels = np.vstack(vals)
     return data_labels[:, 1:].T, data_labels[:, 0:1].T
 
-auto_data_all = load_auto_data('/Users/Onslaught/Documents/6.036 Fall 2020/ubiquitous-palm-tree/perceptron/code_and_data_for_hw3/auto-mpg.tsv')
+auto_data_all = load_auto_data(f'{HW3_FILE_PATH}/auto-mpg.tsv')
 # features = [('cylinders', raw),
 #             ('displacement', raw),
 #             ('horsepower', raw),
@@ -408,7 +409,7 @@ def extract_bow_feature_vectors(reviews, dictionary):
 def reverse_dict(d):
     return {v: k for k, v in d.items()}
 
-text_dict = load_review_data("/Users/Onslaught/Documents/6.036 Fall 2020/ubiquitous-palm-tree/perceptron/code_and_data_for_hw3/reviews.tsv")
+text_dict = load_review_data(f"{DATASET_FILE_PATH}/reviews.tsv")
 # print(text_dict[0])
 # print(data.shape)
 # print(labels.shape)
@@ -487,7 +488,7 @@ def load_mnist_data(labels):
     data = {}
 
     for label in labels:
-        images = load_mnist_single("/Users/Onslaught/Documents/6.036 Fall 2020/ubiquitous-palm-tree/perceptron/code_and_data_for_hw3/mnist/mnist_train{}.png".format(label))
+        images = load_mnist_single(f"{DATASET_FILE_PATH}/mnist/mnist_train{label}.png")
         y = np.array([[label] * len(images)])
         data[label] = {
             "images": images,
