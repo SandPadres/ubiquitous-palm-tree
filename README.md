@@ -1,0 +1,2 @@
+perceptron: Finds a linear classifier to separate 2 classes {-1,1} from each other. Classifier found using the perceptron algorithm.
+nll loss: also finds a linear classifier to separate 2 classes {0,1} from each other {0.5 is the classification cutoff value}. Classifier found using gradient descent. Has the advantage over perceptron that a classifier with largest margin to all points will be preferred.
