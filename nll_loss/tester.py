@@ -26,20 +26,64 @@ def gd(X, Y):
     th = np.zeros((d,1))
     th0 = np.zeros((1,1))
     lam = 0.0001
-    max_iter = 50
+    # max_iters = 4
     def step_size_fn(i):
        return 2/(i+1)**0.1
+    t = 0
 
-    for t in range(max_iter):
+    # for t in range(max_iters):
+    while True:
         old_th = th
         old_th0 = th0
+        # print(X.shape)
+        # print(Y.shape)
+        # print(old_th.shape)
+        # print(old_th0.shape)
+        # print(lam)
         th = old_th - step_size_fn(t) * d_lr_obj_th(X, Y, old_th, old_th0, lam)
         th0 = old_th0 - step_size_fn(t) * d_lr_obj_th0(X, Y, old_th, old_th0)
+        # print(th)
+        # print(th0)
+
+        if abs(lr_obj(X, Y, th, th0, lam) - lr_obj(X, Y, old_th, old_th0, lam)) < 0.00001:
+        # if abs(lr_obj(X, Y, th, th0, lam) - lr_obj(X, Y, old_th, old_th0, lam)) < 1:
+            # Print predictions
+            # print(sigmoid(np.dot(th.T,X) + th0))
+            break
+        # t = t + 1
     return th, th0
 
 # z = scalar or np array
 def sigmoid(z):
     return 1/(1+np.e**(-z))
+
+# actual_y = scalar / array (1 x n)
+# pred_y = scalar / array (1 x n)
+# output = scalar / 1 x n
+def nll_loss(pred_y, actual_y):
+    # print(actual_y)
+    # print(pred_y)
+    # print(-1*(actual_y * np.log(pred_y)))
+    # print((1-actual_y) * np.log(1 - pred_y))
+    # print(-1*(actual_y * np.log(pred_y) + (1-actual_y) * np.log(1 - pred_y)))
+    # print(1/0)
+    return -1*(actual_y * np.log(pred_y) + (1-actual_y) * np.log(1 - pred_y))
+
+# X = d x n
+# Y = 1 x n
+# th = d x 1
+# th0 = scalar
+# lam = scalar
+# output = 1 x n derivative showing the average rate of increase of the objective function as a function of
+# th at th,th0 across all the data points
+def lr_obj(X, Y, th, th0, lam):
+    n = X.shape[1]
+    mag_sqr = np.linalg.norm(th)**2
+    # sigmoid --> 1 x n
+    # nll_loss(1 x n, 1 x n) --> 1 x n
+    # sum --> scalar
+    # scalar + scalar = scalar
+    return np.sum(nll_loss(sigmoid(np.dot(th.T,X) + th0),Y))/n + (lam/2)*mag_sqr
 
 # Returns the gradient of logistic regression(x, y, th, th0) with respect to th
 # X = d x n
@@ -47,13 +91,25 @@ def sigmoid(z):
 # th = d x 1
 # th0 = scalar
 # lam = scalar
-# output = d x n gradient computed at th for all n data points
+# output = 1 x n derivative showing the average rate of increase of the objective function as a function of
+# th at th,th0 across all the data points
 def d_lr_obj_th(X, Y, th, th0, lam):
     n = X.shape[1]
+    # print(X.shape[0])
+    # print(X.shape[1])
 
-    # 1 x n * d x n = d x n
-    # d x n + d x 1 = d x n
-    return np.sum((sigmoid(np.dot(th.T,X) + th0) - Y)*X + lam*th)/n
+    # 1 x n * d x n = d x n --> sum --> d x 1
+    # d x 1 + d x 1 = d x 1
+    # print(th.T.shape)
+    # print(X.shape)
+    # print((np.dot(th.T,X) + th0).shape)
+    # print((sigmoid(np.dot(th.T,X) + th0) - Y).shape)
+    # print((sigmoid(np.dot(th.T,X) + th0) - Y).shape)
+    # print(np.sum((sigmoid(np.dot(th.T,X) + th0) - Y)*X, axis=1, keepdims=True).shape)
+    # print((np.sum((sigmoid(np.dot(th.T,X) + th0) - Y)*X, axis=1, keepdims=True)/n + lam*th).shape)
+    # print(1/0)
+    # print((sigmoid(np.dot(th.T,X) + th0) - Y).shape)
+    return np.sum((sigmoid(np.dot(th.T,X) + th0) - Y)*X, axis=1, keepdims=True)/n + lam*th
 
 # print(np.array([1,2]) * np.array([[1,2],[1,2]]) - np.array([[1],[1]]))
 
@@ -62,7 +118,8 @@ def d_lr_obj_th(X, Y, th, th0, lam):
 # Y = 1 x n
 # th = d x 1
 # th0 = scalar
-# output = 1 x n gradient computed at th0 for all n data points
+# output = 1 x 1 derivative showing the average rate of increase of the objective function at th,th0
+# as a function of th0 across all the data points
 def d_lr_obj_th0(X, Y, th, th0):
     n = X.shape[1]
     return np.sum(sigmoid(np.dot(th.T,X) + th0) - Y)/n
