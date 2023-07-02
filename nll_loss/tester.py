@@ -50,7 +50,7 @@ def gd(X, Y):
             # Print predictions
             # print(sigmoid(np.dot(th.T,X) + th0))
             break
-        # t = t + 1
+        t = t + 1
     return th, th0
 
 # z = scalar or np array
@@ -74,8 +74,7 @@ def nll_loss(pred_y, actual_y):
 # th = d x 1
 # th0 = scalar
 # lam = scalar
-# output = 1 x n derivative showing the average rate of increase of the objective function as a function of
-# th at th,th0 across all the data points
+# scalar = Value of the optimization function using th and th0
 def lr_obj(X, Y, th, th0, lam):
     n = X.shape[1]
     mag_sqr = np.linalg.norm(th)**2

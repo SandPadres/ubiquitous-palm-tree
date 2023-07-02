@@ -1,3 +1,5 @@
 perceptron: Finds a linear classifier to separate 2 classes {-1,1} from each other. Classifier found using the perceptron algorithm.
+
 nll loss: also finds a linear classifier to separate 2 classes {0,1} from each other {If data points not discrete, 0.5 can be used as the classification cutoff value}. Classifier found using gradient descent. Has the advantage over perceptron that a classifier with largest margin to all points will be preferred.
-regression: y values in R instead of having 2 classes. Use mean squared error. Can add a regularization term lam*||th||**2 to the objective function to create ridge regression objective function. Can find th min using an analytical solution when the data has low dimensionality. With High dimensionality, computing the analytical solution is too computationally expensive and you will want to use gradient descent.
+
+regression: y values in R instead of having 2 classes. Use mean squared error as objective function. Can add a regularization term lam*||th||**2 to the objective function to create ridge regression objective function. Use RMSE as the score value when testing. Can find th min using an analytical solution when the data has low dimensionality. With High dimensionality, computing the analytical solution is too computationally expensive and you will want to use gradient descent.

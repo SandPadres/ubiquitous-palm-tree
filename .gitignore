@@ -1,6 +1,10 @@
 perceptron/code_and_data_for_hw3/file_path.py
 perceptron/file_path.py
+nll_loss/file_path.py
+regression/code_and_data_for_hw5/file_path.py
+regression/file_path.py
 perceptron/__pycache__
 nll_loss/__pycache__
 perceptron/code_and_data_for_hw3/__pycache__
 regression/code_and_data_for_hw05/__pycache__
+regression/__pycache__
