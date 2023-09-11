@@ -8,3 +8,6 @@ nll_loss/__pycache__
 perceptron/code_and_data_for_hw3/__pycache__
 regression/code_and_data_for_hw05/__pycache__
 regression/__pycache__
+neural_networks/__pycache__
+neural_networks/code_for_hw7/__pycache__
+neural_networks/file_path.py
