@@ -60,6 +60,10 @@ def score(data, labels, th, th0):
 # labels_test = d' x n
 def eval_classifier(learner, data_train, labels_train, data_test, labels_test):
     th, th0 = learner(data_train, labels_train)
+    # print(th)
+    # print(th0)
+    np.save('penguin_th.npy', th)
+    np.save('penguin_th0.npy', th0)
     return score(data_test, labels_test, th, th0)
 
 # learner = our ML algorithm
@@ -85,3 +89,5 @@ def xval_learning_alg(learner, data, labels, k):
     return mean_score / k
 
 print(xval_learning_alg(perceptron, data, labels, 7))
+penguin_th = np.load("penguin_th.npy")
+penguin_th0 = np.load("penguin_th0.npy")
